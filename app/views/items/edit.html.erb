@@ -1,0 +1,24 @@
+<%= form_with(model: [@list, @item]) do |form| %>
+  <% if @item.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+        <% @item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= link_to "Back to list", list_path(@list) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :item_name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Update Item" %>
+  </div>
+<% end %>

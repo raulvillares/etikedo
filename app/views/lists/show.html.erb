@@ -1,0 +1,21 @@
+<h1><%= @list.title %></h1>
+
+<div>
+  <div>
+    <h2>Items:</h2>
+    <%= link_to "Add new item", new_list_item_path(@list) %>
+    <ul>
+      <% @list.items.each do |item| %>
+        <li>
+          <%= item.name %>
+          <%= button_to 'Edit', edit_list_item_path(@list, item), method: :get, form: { class: "inline" } %>
+          <%= button_to 'Delete', list_item_path(@list, item), method: :delete, data: { turbo_confirm: "Are you sure?" }, form: { class: "inline" } %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div>
+    <%= button_to "Delete list", @list, method: :delete, data: {turbo_confirm: "Are you sure?"} %>
+  </div>
+</div>
