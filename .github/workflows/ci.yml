@@ -8,6 +8,7 @@ jobs:
 
     env:
       RAILS_ENV: test
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/etikedo_test
 
     services:
       postgres:
@@ -37,9 +38,12 @@ jobs:
       - name: Create DB
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/etikedo_test
         run: |
           bin/rails db:prepare
+
+      - name: Check PostgreSQL connection
+        run: |
+          PGPASSWORD=postgres psql -h localhost -U postgres -d etikedo_test -c 'SELECT 1;'
 
       - name: Run tests
         run: |
