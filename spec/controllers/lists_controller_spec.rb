@@ -24,7 +24,7 @@ RSpec.describe ListsController, type: :controller do
   end
 
   describe "POST create" do
-    context "with valid title" do
+    context "happy path" do
       it "creates a new list and redirects to the list's page" do
         post :create, params: { list: { title: "New List Title" } }
 
@@ -57,7 +57,7 @@ RSpec.describe ListsController, type: :controller do
   end
 
   describe "GET show" do
-    context "when list exists" do
+    context "happy path" do
       it "assigns the show view for the corresponding list" do
         list = List.create!(title: "A List Title")
 
@@ -79,7 +79,7 @@ RSpec.describe ListsController, type: :controller do
   end
 
   describe "DELETE destroy" do
-    context "when list exists" do
+    context "happy path" do
       it "deletes the list and redirects to root path" do
         list = List.create!(title: "A List Title")
 
