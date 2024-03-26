@@ -41,9 +41,18 @@ jobs:
           # runs 'bundle install' and caches installed gems automatically
           bundler-cache: true
 
+      - name: Setup PostgreSQL
+        uses: ankane/setup-postgres@v1
+        with:
+          postgres-version: 15
+
       - name: Create DB
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost/etikedo_test
         run: |
           bin/rails db:prepare
+
       - name: Run tests
         run: |
           bundle exec spec
