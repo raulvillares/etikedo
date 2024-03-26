@@ -30,7 +30,7 @@ jobs:
       - name: Create DB
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost/etikedo_test
+          DATABASE_URL: postgres://postgres@localhost/etikedo_test
         run: |
           bin/rails db:prepare
 
