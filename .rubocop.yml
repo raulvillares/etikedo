@@ -1,3 +1,8 @@
+require:
+  - rubocop-capybara
+  - rubocop-rails
+  - rubocop-rspec
+
 AllCops:
   NewCops: enable
   Exclude:
@@ -6,6 +11,10 @@ AllCops:
     - "config/initializers/filter_parameter_logging.rb"
     - "config/environments/development.rb"
     - "config/environments/production.rb"
+
+RSpec/MultipleExpectations:
+  Exclude:
+    - "spec/**/*"
 
 Metrics/BlockLength:
   Exclude:
@@ -28,3 +37,19 @@ Style/StringLiterals:
 
 Style/Documentation:
   Enabled: false
+
+Rails/I18nLocaleTexts:
+  Enabled: false # enable once we have locales configured
+
+RSpec/ContextWording:
+  Prefixes:
+    - when
+    - with
+    - without
+    - if
+    - unless
+    - for
+    - happy path
+
+RSpec/ExampleLength:
+  Max: 10

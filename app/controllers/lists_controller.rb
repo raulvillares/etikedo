@@ -6,6 +6,10 @@ class ListsController < ApplicationController
     @lists = List.all
   end
 
+  def show
+    @list = List.find(params[:id])
+  end
+
   def new
     @list = List.new
   end
@@ -19,10 +23,6 @@ class ListsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def show
-    @list = List.find(params[:id])
   end
 
   def destroy

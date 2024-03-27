@@ -6,6 +6,8 @@ class ItemsController < ApplicationController
     @item = @list.items.build
   end
 
+  def edit; end
+
   def create
     @item = @list.items.build(item_params)
 
@@ -15,8 +17,6 @@ class ItemsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-
-  def edit; end
 
   def update
     if @item.update(item_params)

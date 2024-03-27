@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ItemsController, type: :controller do
+RSpec.describe ItemsController do
   describe "GET new" do
     it "renders the new item page" do
       list = List.create(title: "Test List")

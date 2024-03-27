@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ListsController, type: :controller do
+RSpec.describe ListsController do
   describe "GET index" do
     it "renders the index page for existing lists" do
       list = List.create(title: "A List Title")
