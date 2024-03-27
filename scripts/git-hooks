@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+require "English"
+
+puts "Running RuboCop..."
+system("bundle exec rubocop -F")
+rubocop_success = $CHILD_STATUS.success?
+
+# Attempt to run RSpec
+puts "Running RSpec..."
+system("bundle exec rspec")
+rspec_success = $CHILD_STATUS.success?
+
+# If either command fails, abort the push
+unless rubocop_success && rspec_success
+  puts "Push aborted due to failure in RuboCop or RSpec."
+  exit 1
+end
+
+puts "Push successful. RuboCop and RSpec checks passed."
