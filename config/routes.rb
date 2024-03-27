@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   resources :lists do
-    resources :items, only: [:new, :create, :edit, :update, :destroy]
+    resources :items, only: %i[new create edit update destroy]
   end
 
   # Defines the root path route ("/")

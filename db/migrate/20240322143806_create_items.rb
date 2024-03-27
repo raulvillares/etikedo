@@ -7,6 +7,6 @@ class CreateItems < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    add_index :items, [:list_id, :name], unique: true
+    add_index :items, %i[list_id name], unique: true
   end
 end

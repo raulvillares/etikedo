@@ -1,5 +1,5 @@
 class ListsController < ApplicationController
-  before_action :set_list, only: [:show, :destroy]
+  before_action :set_list, only: %i[show destroy]
   rescue_from ActiveRecord::RecordNotFound, with: :list_not_found
 
   def index

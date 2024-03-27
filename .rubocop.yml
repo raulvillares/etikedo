@@ -1,0 +1,30 @@
+AllCops:
+  NewCops: enable
+  Exclude:
+    - "bin/*"
+    - "config/puma.rb"
+    - "config/initializers/filter_parameter_logging.rb"
+    - "config/environments/development.rb"
+    - "config/environments/production.rb"
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+
+Style/NumericLiterals:
+  Exclude:
+    - "db/schema.rb"
+
+Style/BlockComments:
+  Exclude:
+    - "spec/spec_helper.rb"
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Style/Documentation:
+  Enabled: false

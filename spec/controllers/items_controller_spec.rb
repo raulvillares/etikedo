@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ItemsController, type: :controller do
   describe "GET new" do
@@ -19,9 +19,9 @@ RSpec.describe ItemsController, type: :controller do
       it "creates a new item in the list" do
         list = List.create(title: "Test List")
 
-        expect {
+        expect do
           post :create, params: { list_id: list.id, item: { name: "An item name" } }
-        }.to change(Item, :count).by(1)
+        end.to change(Item, :count).by(1)
 
         expect(response).to redirect_to(list_path(list))
         expect(flash[:notice]).to eq("Item successfully added to the list.")
@@ -32,9 +32,9 @@ RSpec.describe ItemsController, type: :controller do
       it "does not create the index and renders the new template" do
         list = List.create(title: "Test List")
 
-        expect {
+        expect do
           post :create, params: { list_id:  list.id, item: { name: "" } }
-        }.not_to change(Item, :count)
+        end.not_to change(Item, :count)
 
         expect(response).to render_template(:new)
         expect(response).to have_http_status(:unprocessable_entity)
@@ -44,11 +44,11 @@ RSpec.describe ItemsController, type: :controller do
     context "with duplicated item name" do
       it "does not create the index and renders the new template" do
         list = List.create(title: "Test List")
-        existing_item = Item.create(name: "Item name", list: list)
+        Item.create(name: "Item name", list:)
 
-        expect {
+        expect do
           post :create, params: { list_id:  list.id, item: { name: "Item name" } }
-        }.not_to change(Item, :count)
+        end.not_to change(Item, :count)
 
         expect(response).to render_template(:new)
         expect(response).to have_http_status(:unprocessable_entity)
@@ -57,9 +57,9 @@ RSpec.describe ItemsController, type: :controller do
 
     context "when list does not exist" do
       it "redirects to the lists index page with a not found message" do
-        expect {
+        expect do
           post :create, params: { list_id: "non_existing_list_id", item: { name: "An item name" } }
-        }.not_to change(Item, :count)
+        end.not_to change(Item, :count)
 
         expect(response).to redirect_to(lists_path)
         expect(flash[:alert]).to eq("List not found.")
@@ -71,7 +71,7 @@ RSpec.describe ItemsController, type: :controller do
     context "happy path" do
       it "renders the edit item page" do
         list = List.create(title: "Test List")
-        item = Item.create(name: "Item name", list: list)
+        item = Item.create(name: "Item name", list:)
 
         get :edit, params: { list_id: list.id, id: item.id }
 
@@ -85,7 +85,7 @@ RSpec.describe ItemsController, type: :controller do
     context "when list does not exist" do
       it "redirects to the lists index page with a not found message" do
         list = List.create(title: "Test List")
-        item = Item.create(name: "Item name", list: list)
+        item = Item.create(name: "Item name", list:)
 
         get :edit, params: { list_id: "non_existing_list_id", id: item.id }
 
@@ -110,9 +110,9 @@ RSpec.describe ItemsController, type: :controller do
     context "happy path" do
       it "updates item and redirects to list page with successful message" do
         list = List.create(title: "Test List")
-        item = Item.create(name: "Item name", list: list)
+        item = Item.create(name: "Item name", list:)
 
-        put :update, params: { list_id: list.id, id: item.id, item: {name: "New item name"}}
+        put :update, params: { list_id: list.id, id: item.id, item: { name: "New item name" } }
 
         item.reload
         expect(item.name).to eq "New item name"
@@ -124,9 +124,9 @@ RSpec.describe ItemsController, type: :controller do
     context "when item can't be updated" do
       it "does not update the item and renders the edit item page" do
         list = List.create(title: "Test List")
-        item = Item.create(name: "Item name", list: list)
+        item = Item.create(name: "Item name", list:)
 
-        put :update, params: { list_id: list.id, id: item.id, item: {name: ""}}
+        put :update, params: { list_id: list.id, id: item.id, item: { name: "" } }
 
         item.reload
         expect(item.name).to eq "Item name"
@@ -149,7 +149,7 @@ RSpec.describe ItemsController, type: :controller do
     context "when list does not exist" do
       it "redirects to the lists index page with a not found message" do
         list = List.create(title: "Test List")
-        item = Item.create(name: "Item name", list: list)
+        item = Item.create(name: "Item name", list:)
 
         put :update, params: { list_id: "non_existing_list_id", id: item.id }
 
@@ -163,11 +163,11 @@ RSpec.describe ItemsController, type: :controller do
     context "happy path" do
       it "deletes the item and redirects to list page with successful message" do
         list = List.create(title: "Test List")
-        item = Item.create(name: "Item name", list: list)
+        item = Item.create(name: "Item name", list:)
 
-        expect {
+        expect do
           delete :destroy, params: { list_id: list.id, id: item.id }
-        }.to change(Item, :count).by(-1)
+        end.to change(Item, :count).by(-1)
 
         expect(response).to redirect_to(list_path(list.id))
         expect(flash[:notice]).to eq("Item was successfully deleted.")
@@ -188,7 +188,7 @@ RSpec.describe ItemsController, type: :controller do
     context "when list does not exist" do
       it "redirects to the lists index page with a not found message" do
         list = List.create(title: "Test List")
-        item = Item.create(name: "Item name", list: list)
+        item = Item.create(name: "Item name", list:)
 
         delete :destroy, params: { list_id: "non_existing_list_id", id: item.id }
 

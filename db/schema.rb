@@ -19,7 +19,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_143806) do
     t.bigint "list_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["list_id", "name"], name: "index_items_on_list_id_and_name", unique: true
+    t.index %w[list_id name], name: "index_items_on_list_id_and_name", unique: true
     t.index ["list_id"], name: "index_items_on_list_id"
   end
 

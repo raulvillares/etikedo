@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ListsController, type: :controller do
   describe "GET index" do
@@ -45,7 +45,7 @@ RSpec.describe ListsController, type: :controller do
 
     context "with title that already exists" do
       it "does not create the list and renders the new template" do
-        list = List.create(title: "A List Title")
+        List.create(title: "A List Title")
 
         post :create, params: { list: { title: "A List Title" } }
 
@@ -83,20 +83,20 @@ RSpec.describe ListsController, type: :controller do
       it "deletes the list and redirects to root path" do
         list = List.create!(title: "A List Title")
 
-        expect {
+        expect do
           delete :destroy, params: { id: list.id }
-        }.to change(List, :count).by(-1)
+        end.to change(List, :count).by(-1)
 
         expect(response).to redirect_to(root_path)
       end
 
       it "deletes the associated items" do
         list = List.create!(title: "A List Title")
-        item = Item.create!(name: "An Item Name", list: list)
+        Item.create!(name: "An Item Name", list:)
 
-        expect {
+        expect do
           delete :destroy, params: { id: list.id }
-        }.to change(Item, :count).by(-1)
+        end.to change(Item, :count).by(-1)
       end
     end
 
