@@ -35,6 +35,10 @@ jobs:
           # runs 'bundle install' and caches installed gems automatically
           bundler-cache: true
 
+      - name: Run rubocop
+        run: |
+          bundle exec rubocop -F
+
       - name: Create DB
         env:
           RAILS_ENV: test
