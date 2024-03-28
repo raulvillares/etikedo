@@ -11,6 +11,7 @@ AllCops:
     - "config/initializers/filter_parameter_logging.rb"
     - "config/environments/development.rb"
     - "config/environments/production.rb"
+    - 'vendor/**/*'
 
 RSpec/MultipleExpectations:
   Exclude:
