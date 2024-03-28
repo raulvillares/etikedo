@@ -75,3 +75,5 @@ group :test do
   gem "rails-controller-testing"
   gem "rspec-rails"
 end
+
+gem "revise_auth", "~> 0.5.0"
