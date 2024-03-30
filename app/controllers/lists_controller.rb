@@ -1,14 +1,13 @@
 class ListsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_list, only: %i[show destroy]
   rescue_from ActiveRecord::RecordNotFound, with: :list_not_found
 
   def index
-    @lists = List.all
+    @lists = List.by_user(current_user)
   end
 
-  def show
-    @list = List.find(params[:id])
-  end
+  def show; end
 
   def new
     @list = List.new
@@ -16,7 +15,7 @@ class ListsController < ApplicationController
 
   def create
     list_params = params.require(:list).permit(:title)
-    @list = List.new(list_params)
+    @list = current_user.lists.build(list_params)
 
     if @list.save
       redirect_to @list
@@ -26,8 +25,6 @@ class ListsController < ApplicationController
   end
 
   def destroy
-    @list = List.find(params[:id])
-
     @list.destroy
     redirect_to root_path
   end
@@ -35,7 +32,7 @@ class ListsController < ApplicationController
   private
 
   def set_list
-    @list = List.find(params[:id])
+    @list = List.by_user(current_user).find(params[:id])
   end
 
   def update_params

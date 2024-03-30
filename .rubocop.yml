@@ -7,10 +7,12 @@ AllCops:
   NewCops: enable
   Exclude:
     - "bin/*"
+    - "db/schema.rb"
     - "config/puma.rb"
     - "config/initializers/filter_parameter_logging.rb"
     - "config/environments/development.rb"
     - "config/environments/production.rb"
+    - "config/initializers/devise.rb"
     - 'vendor/**/*' # Configs should not be loaded from vendor directories, which may be created automatically by CI environments like GitHub Actions.
 
 RSpec/MultipleExpectations:

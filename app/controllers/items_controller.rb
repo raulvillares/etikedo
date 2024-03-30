@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_list
   before_action :set_item, only: %i[edit update destroy]
 
@@ -34,7 +35,7 @@ class ItemsController < ApplicationController
   private
 
   def set_list
-    @list = List.find(params[:list_id])
+    @list = List.by_user(current_user).find(params[:list_id])
   rescue ActiveRecord::RecordNotFound
     flash[:alert] = "List not found."
     redirect_to lists_path

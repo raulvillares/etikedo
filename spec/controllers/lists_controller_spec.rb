@@ -1,9 +1,15 @@
 require "rails_helper"
 
 RSpec.describe ListsController do
+  let(:user) { User.create!(email: "user@example.com", password: "password", password_confirmation: "password") }
+
+  before do
+    sign_in user
+  end
+
   describe "GET index" do
     it "renders the index page for existing lists" do
-      list = List.create(title: "A List Title")
+      list = List.create(title: "A List Title", user:)
 
       get :index
 
@@ -45,7 +51,7 @@ RSpec.describe ListsController do
 
     context "with title that already exists" do
       it "does not create the list and renders the new template" do
-        List.create(title: "A List Title")
+        List.create(title: "A List Title", user:)
 
         post :create, params: { list: { title: "A List Title" } }
 
@@ -59,7 +65,7 @@ RSpec.describe ListsController do
   describe "GET show" do
     context "happy path" do
       it "assigns the show view for the corresponding list" do
-        list = List.create!(title: "A List Title")
+        list = List.create!(title: "A List Title", user:)
 
         get :show, params: { id: list.id }
 
@@ -81,7 +87,7 @@ RSpec.describe ListsController do
   describe "DELETE destroy" do
     context "happy path" do
       it "deletes the list and redirects to root path" do
-        list = List.create!(title: "A List Title")
+        list = List.create!(title: "A List Title", user:)
 
         expect do
           delete :destroy, params: { id: list.id }
@@ -91,7 +97,7 @@ RSpec.describe ListsController do
       end
 
       it "deletes the associated items" do
-        list = List.create!(title: "A List Title")
+        list = List.create!(title: "A List Title", user:)
         Item.create!(name: "An Item Name", list:)
 
         expect do

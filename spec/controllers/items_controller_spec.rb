@@ -1,9 +1,15 @@
 require "rails_helper"
 
 RSpec.describe ItemsController do
+  let(:user) { User.create!(email: "user@example.com", password: "password", password_confirmation: "password") }
+
+  before do
+    sign_in user
+  end
+
   describe "GET new" do
     it "renders the new item page" do
-      list = List.create(title: "Test List")
+      list = List.create(title: "Test List", user:)
 
       get :new, params: { list_id: list.id }
 
@@ -17,7 +23,7 @@ RSpec.describe ItemsController do
   describe "POST create" do
     context "happy path" do
       it "creates a new item in the list" do
-        list = List.create(title: "Test List")
+        list = List.create(title: "Test List", user:)
 
         expect do
           post :create, params: { list_id: list.id, item: { name: "An item name" } }
@@ -30,7 +36,7 @@ RSpec.describe ItemsController do
 
     context "with invalid item name" do
       it "does not create the index and renders the new template" do
-        list = List.create(title: "Test List")
+        list = List.create(title: "Test List", user:)
 
         expect do
           post :create, params: { list_id:  list.id, item: { name: "" } }
@@ -43,7 +49,7 @@ RSpec.describe ItemsController do
 
     context "with duplicated item name" do
       it "does not create the index and renders the new template" do
-        list = List.create(title: "Test List")
+        list = List.create(title: "Test List", user:)
         Item.create(name: "Item name", list:)
 
         expect do
@@ -70,7 +76,7 @@ RSpec.describe ItemsController do
   describe "GET edit" do
     context "happy path" do
       it "renders the edit item page" do
-        list = List.create(title: "Test List")
+        list = List.create(title: "Test List", user:)
         item = Item.create(name: "Item name", list:)
 
         get :edit, params: { list_id: list.id, id: item.id }
@@ -84,7 +90,7 @@ RSpec.describe ItemsController do
 
     context "when list does not exist" do
       it "redirects to the lists index page with a not found message" do
-        list = List.create(title: "Test List")
+        list = List.create(title: "Test List", user:)
         item = Item.create(name: "Item name", list:)
 
         get :edit, params: { list_id: "non_existing_list_id", id: item.id }
@@ -96,7 +102,7 @@ RSpec.describe ItemsController do
 
     context "when item does not exist" do
       it "redirects to the list page with a not found message" do
-        list = List.create(title: "Test List")
+        list = List.create(title: "Test List", user:)
 
         get :edit, params: { list_id: list.id, id: "non_existing_item_id" }
 
@@ -109,7 +115,7 @@ RSpec.describe ItemsController do
   describe "PUT update" do
     context "happy path" do
       it "updates item and redirects to list page with successful message" do
-        list = List.create(title: "Test List")
+        list = List.create(title: "Test List", user:)
         item = Item.create(name: "Item name", list:)
 
         put :update, params: { list_id: list.id, id: item.id, item: { name: "New item name" } }
@@ -123,7 +129,7 @@ RSpec.describe ItemsController do
 
     context "when item can't be updated" do
       it "does not update the item and renders the edit item page" do
-        list = List.create(title: "Test List")
+        list = List.create(title: "Test List", user:)
         item = Item.create(name: "Item name", list:)
 
         put :update, params: { list_id: list.id, id: item.id, item: { name: "" } }
@@ -137,7 +143,7 @@ RSpec.describe ItemsController do
 
     context "when item does not exist" do
       it "redirects to the list page with a not found message" do
-        list = List.create(title: "Test List")
+        list = List.create(title: "Test List", user:)
 
         put :update, params: { list_id: list.id, id: "non_existing_item_id" }
 
@@ -148,7 +154,7 @@ RSpec.describe ItemsController do
 
     context "when list does not exist" do
       it "redirects to the lists index page with a not found message" do
-        list = List.create(title: "Test List")
+        list = List.create(title: "Test List", user:)
         item = Item.create(name: "Item name", list:)
 
         put :update, params: { list_id: "non_existing_list_id", id: item.id }
@@ -162,7 +168,7 @@ RSpec.describe ItemsController do
   describe "DELETE destroy" do
     context "happy path" do
       it "deletes the item and redirects to list page with successful message" do
-        list = List.create(title: "Test List")
+        list = List.create(title: "Test List", user:)
         item = Item.create(name: "Item name", list:)
 
         expect do
@@ -176,7 +182,7 @@ RSpec.describe ItemsController do
 
     context "when item does not exist" do
       it "redirects to the list page with a not found message" do
-        list = List.create(title: "Test List")
+        list = List.create(title: "Test List", user:)
 
         delete :destroy, params: { list_id: list.id, id: "non_existing_item_id" }
 
@@ -187,7 +193,7 @@ RSpec.describe ItemsController do
 
     context "when list does not exist" do
       it "redirects to the lists index page with a not found message" do
-        list = List.create(title: "Test List")
+        list = List.create(title: "Test List", user:)
         item = Item.create(name: "Item name", list:)
 
         delete :destroy, params: { list_id: "non_existing_list_id", id: item.id }
