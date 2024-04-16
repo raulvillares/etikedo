@@ -11,15 +11,17 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="prose mx-auto">
-    <nav>
-      <% if user_signed_in? %>
-        <%= link_to "My lists", lists_path %>
-        <%= link_to "New list", new_list_path %>
-        <%= button_to "Log out", destroy_user_session_path, method: :delete %>
-      <% else %>
-        <%= link_to "Login", new_user_session_path %>
-      <% end %>
+  <body class="prose mx-auto bg-gray-100">
+    <nav class="bg-gray-200 p-4 text-white text-sm">
+      <div class="container mx-auto flex justify-between">
+        <% if user_signed_in? %>
+          <%= link_to "My lists", lists_path, class: "px-5 py-3 bg-gray-300 text-gray-900 rounded-lg shadow-lg no-underline hover:bg-gray-400 transition duration-150 ease-in-out" %>
+          <%= link_to "New list", new_list_path, class: "px-5 py-3 bg-blue-500 text-white rounded-lg shadow-lg no-underline hover:bg-blue-700 transition duration-150 ease-in-out" %>
+          <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "px-5 py-3 bg-gray-300 text-gray-900 rounded-lg shadow-lg no-underline hover:bg-gray-400 transition duration-150 ease-in-out" %>
+        <% else %>
+          <%= link_to "Login", new_user_session_path, class: "text-gray-900 bg-white px-5 py-3 rounded-lg shadow-lg no-underline hover:bg-gray-100 transition duration-150 ease-in-out" %>
+        <% end %>
+      </div>
     </nav>
 
     <p class="notice"><%= notice %></p>
