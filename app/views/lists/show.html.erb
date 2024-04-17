@@ -1,21 +1,22 @@
-<h1><%= @list.title %></h1>
+<div class="mx-auto p-4 bg-white rounded-lg shadow">
+  <h1 class="text-2xl font-bold text-gray-800 mb-4"><%= @list.title %></h1>
 
-<div>
   <div>
-    <h2>Items:</h2>
-    <%= link_to "Add new item", new_list_item_path(@list) %>
-    <ul>
+    <ul class="list-disc pl-5">
       <% @list.items.each do |item| %>
-        <li>
-          <%= item.name %>
-          <%= button_to 'Edit', edit_list_item_path(@list, item), method: :get, form: { class: "inline" } %>
-          <%= button_to 'Delete', list_item_path(@list, item), method: :delete, data: { turbo_confirm: "Are you sure?" }, form: { class: "inline" } %>
+        <li class="flex justify-between items-center mb-2 bg-gray-100 p-2 rounded">
+          <span class="text-gray-900"><%= item.name %></span>
+          <div>
+            <%= button_to 'Edit', edit_list_item_path(@list, item), method: :get, form: { class: "inline" }, class: "mr-2 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-3 rounded" %>
+            <%= button_to 'Delete', list_item_path(@list, item), method: :delete, data: { turbo_confirm: "Are you sure?" }, form: { class: "inline" }, class: "bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded" %>
+          </div>
         </li>
       <% end %>
     </ul>
   </div>
 
-  <div>
-    <%= button_to "Delete list", @list, method: :delete, data: {turbo_confirm: "Are you sure?"} %>
+  <div class="flex mt-4 space-x-4">
+    <%= link_to "Add new item", new_list_item_path(@list), class: "inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded no-underline" %>
+    <%= button_to "Delete list", @list, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
   </div>
 </div>

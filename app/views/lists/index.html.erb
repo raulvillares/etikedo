@@ -1,7 +1,7 @@
-<ul>
+<ul class="space-y-2 list-none">
   <% @lists.each do |list| %>
-    <li>
-    <%= link_to list.title, list %>
+    <li class="bg-white rounded-lg p-3 shadow hover:bg-blue-100 transition duration-150 ease-in-out">
+      <%= link_to list.title, list, class: "text-blue-600 hover:text-blue-800 no-underline hover:underline" %>
     </li>
   <% end %>
 </ul>
