@@ -1,14 +1,6 @@
 <%= form_with model: @list, local: true, class: "mx-auto p-6 bg-white rounded-lg shadow-md" do |form| %>
-  <% if form.object.errors.any? %>
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-      <strong>Errors:</strong>
-      <ul class="list-disc pl-5">
-        <% form.object.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render "shared/errors", form: form %>
+
   <div class="mb-6">
     <%= form.label :title, class: "block text-gray-700 text-sm font-bold mb-2" %>
     <%= form.text_field :title, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
