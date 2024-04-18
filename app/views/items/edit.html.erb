@@ -1,7 +1,8 @@
-<%= form_with(model: [@list, @item]) do |form| %>
+<%= form_with(model: [@list, @item], local: true, class: "max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md") do |form| %>
   <% if @item.errors.any? %>
-    <div id="error_explanation">
-      <ul>
+    <div id="error_explanation" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+      <strong>Errors:</strong>
+      <ul class="list-disc pl-5">
         <% @item.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
@@ -9,16 +10,16 @@
     </div>
   <% end %>
 
-  <div>
-    <%= link_to "Back to list", list_path(@list) %>
+  <div class="mb-4">
+    <%= link_to "Back to list", list_path(@list), class: "text-blue-500 hover:text-blue-700 underline" %>
   </div>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :item_name %>
+  <div class="mb-4">
+    <%= form.label :name, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.text_field :name, id: :item_name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit "Update Item" %>
+  <div class="flex justify-end">
+    <%= form.submit "Update Item", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer" %>
   </div>
 <% end %>
