@@ -6,9 +6,13 @@
       <% @list.items.each do |item| %>
         <li class="flex justify-between items-center mb-2 bg-gray-100 p-2 rounded">
           <span class="text-gray-900"><%= item.name %></span>
-          <div>
-            <%= button_to 'Edit', edit_list_item_path(@list, item), method: :get, form: { class: "inline" }, class: "mr-2 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-3 rounded" %>
-            <%= button_to 'Delete', list_item_path(@list, item), method: :delete, data: { turbo_confirm: "Are you sure?" }, form: { class: "inline" }, class: "bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded" %>
+          <div class="flex items-center">
+            <%= button_to edit_list_item_path(@list, item), method: :get, form: { class: "inline" }, class: "mr-2 bg-gray-400 hover:bg-gray-500 text-white font-bold py-1 px-3 rounded" do %>
+              <i class="fas fa-edit"></i>
+            <% end %>
+            <%= button_to list_item_path(@list, item), method: :delete, data: { turbo_confirm: "Are you sure?" }, form: { class: "inline" }, class: "bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded" do %>
+              <i class="fas fa-trash-alt"></i>
+            <% end %>
           </div>
         </li>
       <% end %>
