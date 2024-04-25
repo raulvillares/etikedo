@@ -32,6 +32,11 @@ class ItemsController < ApplicationController
     redirect_to list_path(@list), notice: "Item was successfully deleted."
   end
 
+  def move
+    @item.insert_at(params[:position].to_i)
+    head :ok
+  end
+
   private
 
   def set_list

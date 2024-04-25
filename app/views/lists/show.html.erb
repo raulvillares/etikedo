@@ -2,9 +2,9 @@
   <h1 class="text-2xl font-bold text-gray-800 mb-4"><%= @list.title %></h1>
 
   <div>
-    <ul class="list-disc pl-5">
+    <ul  data-controller="drag" data-drag-url="/lists/<%= @list.id %>/items/:id/move" class="list-disc pl-5">
       <% @list.items.each do |item| %>
-        <li class="flex justify-between items-center mb-2 bg-gray-100 p-2 rounded">
+        <li data-id="<%= item.id %>" class="flex justify-between items-center mb-2 bg-gray-100 p-2 rounded">
           <span class="text-gray-900"><%= item.name %></span>
           <div class="flex items-center">
             <%= button_to edit_list_item_path(@list, item), method: :get, form: { class: "inline" }, class: "mr-1 bg-gray-400 hover:bg-gray-500 text-white font-bold py-0 px-2 rounded" do %>

@@ -78,3 +78,5 @@ end
 
 gem "devise", "~> 4.9"
 gem "font-awesome-rails"
+
+gem "acts_as_list", "~> 1.1"
