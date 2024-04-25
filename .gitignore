@@ -38,3 +38,5 @@
 !/app/assets/builds/.keep
 
 /.vscode
+
+*.DS_store
