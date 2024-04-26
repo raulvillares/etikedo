@@ -20,15 +20,7 @@ export default class extends Controller {
       headers: {
         'X-CSRF-Token': document.querySelector("meta[name='csrf-token']").getAttribute('content')
       }
-    }).then(response => {
-      if (response.ok) {
-        console.log('Update successful');
-      } else {
-        console.error('Update failed');
-      }
-    }).catch(error => {
-      console.error('Error:', error);
-    });
-}
+    })
+  }
 
 }

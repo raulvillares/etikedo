@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_list
-  before_action :set_item, only: %i[edit update destroy]
+  before_action :set_item, only: %i[edit update destroy move]
 
   def new
     @item = @list.items.build

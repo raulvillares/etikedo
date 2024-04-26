@@ -203,4 +203,17 @@ RSpec.describe ItemsController do
       end
     end
   end
+
+  describe "PATCH move" do
+    it "moves item to indicated position" do
+      list = List.create(title: "Test List", user:)
+      item_first = Item.create(name: "Item first name", list:)
+      item_second = Item.create(name: "Item second name", list:)
+
+      patch :move, params: { list_id: list.id, id: item_first.id, position: "2" }
+
+      expect(item_first.reload.position).to be 2
+      expect(item_second.reload.position).to be 1
+    end
+  end
 end
