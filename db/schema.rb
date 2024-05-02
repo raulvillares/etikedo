@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_25_194906) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_02_070637) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_25_194906) do
     t.integer "position"
     t.index ["list_id", "name"], name: "index_items_on_list_id_and_name", unique: true
     t.index ["list_id"], name: "index_items_on_list_id"
+  end
+
+  create_table "label_assignments", force: :cascade do |t|
+    t.string "labelable_type", null: false
+    t.bigint "labelable_id", null: false
+    t.bigint "label_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["label_id", "labelable_type", "labelable_id"], name: "index_label_assignments_on_label_and_labelable", unique: true
+    t.index ["label_id"], name: "index_label_assignments_on_label_id"
+    t.index ["labelable_type", "labelable_id"], name: "index_label_assignments_on_labelable"
+  end
+
+  create_table "labels", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_labels_on_name", unique: true
   end
 
   create_table "lists", force: :cascade do |t|
@@ -46,5 +64,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_25_194906) do
   end
 
   add_foreign_key "items", "lists"
+  add_foreign_key "label_assignments", "labels"
   add_foreign_key "lists", "users"
 end
