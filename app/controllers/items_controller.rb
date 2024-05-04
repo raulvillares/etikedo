@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_list
-  before_action :set_item, only: %i[edit update destroy move]
+  before_action :set_item, only: %i[edit update destroy move assign_label unassign_label]
 
   def new
     @item = @list.items.build
@@ -35,6 +35,22 @@ class ItemsController < ApplicationController
   def move
     @item.insert_at(params[:position].to_i)
     head :ok
+  end
+
+  def assign_label
+    ActiveRecord::Base.transaction do
+      label = Label.find_or_create_by_name(params[:label_name])
+      @item.labels << label unless @item.labels.include?(label)
+    end
+
+    redirect_to edit_item_path(@item)
+  end
+
+  def unassign_label
+    label = @item.labels.find_by(name: params[:label_name])
+    @item.labels.destroy(label) if label
+
+    redirect_to edit_item_path(@item)
   end
 
   private
