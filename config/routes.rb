@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     resources :items, only: %i[new create edit update destroy] do
       member do
         patch "move"
+        patch "assign_label/:label_name", to: "items#assign_label", as: :assign_label
+        patch "unassign_label/:label_name", to: "items#unassign_label", as: :unassign_label
       end
     end
   end

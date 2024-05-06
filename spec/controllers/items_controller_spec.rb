@@ -216,4 +216,47 @@ RSpec.describe ItemsController do
       expect(item_second.reload.position).to be 1
     end
   end
+
+  describe "PATCH assign_label" do
+    context "when label does not exist" do
+      it "creates the label and assigns it to the item" do
+        list = List.create(title: "Test List", user:)
+        item = Item.create(name: "Item name", list:)
+
+        patch :assign_label, params: { list_id: list.id, id: item.id, label_name: "Label name" }
+
+        expected_label = Label.find_by(name: "Label name")
+        expect(response).to redirect_to(edit_list_item_path(item))
+        expect(item.reload.labels).to include(expected_label)
+      end
+    end
+
+    context "when label does exist" do
+      it "assigns it to the item" do
+        list = List.create(title: "Test List", user:)
+        item = Item.create(name: "Item name", list:)
+        label = Label.create(name: "Label name")
+
+        patch :assign_label, params: { list_id: list.id, id: item.id, label_name: "Label name" }
+
+        expect(response).to redirect_to(edit_list_item_path(item))
+        expect(item.reload.labels).to include(label)
+      end
+    end
+  end
+
+  describe "PATCH unassign_label" do
+    it "unassigns label to item" do
+      list = List.create(title: "Test List", user:)
+      item = Item.create(name: "Item name", list:)
+      label = Label.create(name: "Label name")
+      item.labels << label
+      item.save!
+
+      patch :unassign_label, params: { list_id: list.id, id: item.id, label_name: "Label name" }
+
+      expect(response).to redirect_to(edit_list_item_path(item))
+      expect(item.reload.labels).not_to include(label)
+    end
+  end
 end

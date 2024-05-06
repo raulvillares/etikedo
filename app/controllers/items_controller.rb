@@ -43,14 +43,14 @@ class ItemsController < ApplicationController
       @item.labels << label unless @item.labels.include?(label)
     end
 
-    redirect_to edit_item_path(@item)
+    redirect_to edit_list_item_path(@item)
   end
 
   def unassign_label
     label = @item.labels.find_by(name: params[:label_name])
     @item.labels.destroy(label) if label
 
-    redirect_to edit_item_path(@item)
+    redirect_to edit_list_item_path(@item)
   end
 
   private
