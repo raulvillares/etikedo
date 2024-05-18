@@ -42,7 +42,7 @@ class ItemsController < ApplicationController
     return if params[:item][:label][:name].blank?
 
     ActiveRecord::Base.transaction do
-      label = Label.find_or_create_by_name(name: params[:item][:label][:name])
+      label = Label.find_or_create_by_name(params[:item][:label][:name])
       @item.labels << label unless @item.labels.include?(label)
     end
   end
