@@ -147,7 +147,8 @@ RSpec.describe ItemsController do
           item = Item.create(name: "Item name", list:)
           label = Label.create(name: "Label name")
 
-          patch :update, params: { list_id: list.id, id: item.id, item: { name: item.name, label: { name: "Label name" } } }
+          patch :update,
+                params: { list_id: list.id, id: item.id, item: { name: item.name, label: { name: "Label name" } } }
 
           expect(response).to redirect_to(list_path(list))
           expect(item.reload.labels).to include(label)
@@ -244,7 +245,6 @@ RSpec.describe ItemsController do
       expect(item_second.reload.position).to be 1
     end
   end
-
 
   describe "PATCH unassign_label" do
     it "unassigns label to item" do
