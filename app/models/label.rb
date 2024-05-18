@@ -11,4 +11,6 @@ class Label < ApplicationRecord
   def self.find_or_create_by_name(name)
     find_or_create_by(name: NORMALIZE_NAME.call(name))
   end
+
+  def to_combobox_display = name
 end
