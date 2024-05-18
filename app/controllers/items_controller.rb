@@ -21,7 +21,6 @@ class ItemsController < ApplicationController
 
   def update
     if @item.update(item_params)
-      assign_label
       redirect_to list_path(@list), notice: "Item was successfully updated."
     else
       render :edit, status: :unprocessable_entity
@@ -39,10 +38,8 @@ class ItemsController < ApplicationController
   end
 
   def assign_label
-    return if params[:item][:label][:name].blank?
-
     ActiveRecord::Base.transaction do
-      label = Label.find_or_create_by_name(params[:item][:label][:name])
+      label = Label.find_or_create_by_name(params[:label_name])
       @item.labels << label unless @item.labels.include?(label)
     end
   end

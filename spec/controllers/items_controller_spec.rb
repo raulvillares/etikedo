@@ -126,34 +126,6 @@ RSpec.describe ItemsController do
         expect(response).to redirect_to(list_path(list.id))
         expect(flash[:notice]).to eq("Item was successfully updated.")
       end
-
-      context "when label does not exist" do # rubocop:disable RSpec/NestedGroups
-        it "creates the label and assigns it to the item" do
-          list = List.create(title: "Test List", user:)
-          item = Item.create(name: "Item name", list:)
-
-          patch :update,
-                params: { list_id: list.id, id: item.id, item: { name: item.name, label: { name: "Label name" } } }
-
-          expected_label = Label.find_by(name: "Label name")
-          expect(response).to redirect_to(list_path(list))
-          expect(item.reload.labels).to include(expected_label)
-        end
-      end
-
-      context "when label does exist" do # rubocop:disable RSpec/NestedGroups
-        it "assigns it to the item" do
-          list = List.create(title: "Test List", user:)
-          item = Item.create(name: "Item name", list:)
-          label = Label.create(name: "Label name")
-
-          patch :update,
-                params: { list_id: list.id, id: item.id, item: { name: item.name, label: { name: "Label name" } } }
-
-          expect(response).to redirect_to(list_path(list))
-          expect(item.reload.labels).to include(label)
-        end
-      end
     end
 
     context "when item can't be updated" do
@@ -243,6 +215,34 @@ RSpec.describe ItemsController do
 
       expect(item_first.reload.position).to be 2
       expect(item_second.reload.position).to be 1
+    end
+  end
+
+  describe "PATCH assign_label" do
+    context "when label does not exist" do
+      it "creates the label and assigns it to the item" do
+        list = List.create(title: "Test List", user:)
+        item = Item.create(name: "Item name", list:)
+
+        patch :assign_label, params: { list_id: list.id, id: item.id, label_name: "Label name" }
+
+        expected_label = Label.find_by(name: "Label name")
+        expect(response).to redirect_to(edit_list_item_path(item))
+        expect(item.reload.labels).to include(expected_label)
+      end
+    end
+
+    context "when label does exist" do
+      it "assigns it to the item" do
+        list = List.create(title: "Test List", user:)
+        item = Item.create(name: "Item name", list:)
+        label = Label.create(name: "Label name")
+
+        patch :assign_label, params: { list_id: list.id, id: item.id, label_name: "Label name" }
+
+        expect(response).to redirect_to(edit_list_item_path(item))
+        expect(item.reload.labels).to include(label)
+      end
     end
   end
 

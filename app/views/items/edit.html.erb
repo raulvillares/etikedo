@@ -14,7 +14,10 @@
     <%= link_to "Back to list", list_path(@list), class: "text-blue-500 hover:text-blue-700 underline" %>
   </div>
 
-  <%= form.combobox :label, Label.all, name_when_new: "item[label][name]" %>
+  <div data-controller="label" data-label-list-id="<%= @list.id %>" data-label-item-id="<%= @item.id %>">
+    <%= form.label :label, "Label", class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.combobox :label, Label.all, name_when_new: "item[label][name]", input: { data: { label_target: "combobox" } } %>
+  </div>
 
   <div class="mb-4">
     <%= form.label :name, class: "block text-gray-700 text-sm font-bold mb-2" %>
