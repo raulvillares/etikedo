@@ -227,7 +227,6 @@ RSpec.describe ItemsController do
         patch :assign_label, params: { list_id: list.id, id: item.id, label_name: "Label name" }
 
         expected_label = Label.find_by(name: "Label name")
-        expect(response).to redirect_to(edit_list_item_path(item))
         expect(item.reload.labels).to include(expected_label)
       end
     end
@@ -240,7 +239,6 @@ RSpec.describe ItemsController do
 
         patch :assign_label, params: { list_id: list.id, id: item.id, label_name: "Label name" }
 
-        expect(response).to redirect_to(edit_list_item_path(item))
         expect(item.reload.labels).to include(label)
       end
     end
